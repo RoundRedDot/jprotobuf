@@ -13,7 +13,7 @@
 
   <groupId>com.baidu</groupId>
   <artifactId>jprotobuf</artifactId>
-	<version>2.4.23</version>
+  <version>2.4.24</version>
 
   <name>jprotobuf</name>
   <description>A useful utility library for java programmer using google protobuf.</description>
@@ -23,12 +23,12 @@
     <nexus.host>https://nexus.rrdtech.cn</nexus.host>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
-    <junit.version>4.13.2</junit.version>
     <auto.value.version>1.11.0</auto.value.version>
-    <protobuf-java.version>3.25.5</protobuf-java.version>
-    <jprotobuf-protoparser.version>1.0.2</jprotobuf-protoparser.version>
-    <slf4j.version>2.0.17</slf4j.version>
     <commons-io.version>2.18.0</commons-io.version>
+    <jprotobuf-protoparser.version>1.0.2</jprotobuf-protoparser.version>
+    <junit.version>4.13.2</junit.version>
+    <protobuf-java.version>3.25.5</protobuf-java.version>
+    <slf4j.version>2.0.17</slf4j.version>
   </properties>
 
   <issueManagement>
