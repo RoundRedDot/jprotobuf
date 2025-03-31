@@ -192,7 +192,7 @@ public class JprotobufPreCompileMain {
                     if (tartMTime <= mtime) {
                         // no modify just continue
                         LOGGER.info("no modify class '" + cls.getSimpleName() + "', will skip precompile.");
-                        return;
+                        continue;
                     }
                     
                     ProtobufProxy.create(cls, false, outputPath);
@@ -238,6 +238,9 @@ public class JprotobufPreCompileMain {
     private static void createProtoFile(Class<?> c, String outputPath, Set<Class<?>> cachedIDLTypes, 
             Set<Class<?>> cachedIDLEnumTypes) throws UnsupportedEncodingException, IOException {
         String code = ProtobufIDLGenerator.getIDL(c, cachedIDLTypes, cachedIDLEnumTypes);
+        if (StringUtils.isEmpty(code)) { // to fix returned a null code
+            return;
+        }
 
         String pkg = "";
         String className = c.getName();
