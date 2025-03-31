@@ -2,11 +2,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>9</version>
-	</parent>
+<!--	<parent>-->
+<!--		<groupId>org.sonatype.oss</groupId>-->
+<!--		<artifactId>oss-parent</artifactId>-->
+<!--		<version>9</version>-->
+<!--	</parent>-->
 
 	<groupId>com.baidu</groupId>
 	<artifactId>jprotobuf-precompile-plugin</artifactId>
@@ -18,7 +18,9 @@
 	<properties>
 		<nexus.host>https://nexus.rrdtech.cn</nexus.host>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.7</java.version>
+		<java.version>1.8</java.version>
+		<maven-plugin.version>3.15.1</maven-plugin.version>
+		<commons-io.version>2.18.0</commons-io.version>
 		<junit.version>4.10</junit.version>
 		<mavenVersion>2.2.1</mavenVersion>
 	</properties>
@@ -32,26 +34,17 @@
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-toolchain</artifactId>
 			<version>${mavenVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.maven</groupId>
-			<artifactId>maven-artifact-manager</artifactId>
-			<version>${mavenVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.maven</groupId>
-			<artifactId>maven-artifact</artifactId>
-			<version>${mavenVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.maven</groupId>
-			<artifactId>maven-plugin-api</artifactId>
-			<version>${mavenVersion}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.plugin-tools</groupId>
 			<artifactId>maven-plugin-annotations</artifactId>
-			<version>3.3</version>
+			<version>${maven-plugin.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -67,13 +60,12 @@
 		</dependency>
 	</dependencies>
 	<build>
-
 		<pluginManagement>
 			<plugins>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-plugin-plugin</artifactId>
-					<version>3.15.1</version>
+					<version>${maven-plugin.version}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -82,7 +74,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.14.0</version>
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
@@ -90,7 +82,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>2.1</version>
+				<version>3.3.1</version>
 				<configuration>
 					<attach>true</attach>
 				</configuration>
@@ -114,9 +106,15 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.9.1</version>
+				<version>3.11.2</version>
 				<configuration>
 					<aggregate>true</aggregate>
+					<!-- 替换 additionalparam 为 doclint -->
+					<doclint>none</doclint>
+					<!-- 添加以下配置 -->
+					<failOnError>false</failOnError>
+					<source>8</source>
+					<encoding>UTF-8</encoding>
 				</configuration>
 				<executions>
 					<execution>
@@ -124,9 +122,6 @@
 						<goals>
 							<goal>jar</goal>
 						</goals>
-						<configuration>
-							<additionalparam>-Xdoclint:none</additionalparam>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
